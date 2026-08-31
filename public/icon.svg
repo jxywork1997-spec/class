@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="我的课表">
+  <rect width="512" height="512" rx="116" fill="#087d79"/>
+  <path d="M104 166c0-31 25-56 56-56h192c31 0 56 25 56 56v202c0 25-20 45-45 45H149c-25 0-45-20-45-45V166Z" fill="#f6fffc"/>
+  <path d="M104 177c0-37 30-67 67-67h170c37 0 67 30 67 67v35H104v-35Z" fill="#ffc956"/>
+  <g fill="#087d79">
+    <rect x="154" y="75" width="32" height="75" rx="16"/>
+    <rect x="326" y="75" width="32" height="75" rx="16"/>
+    <rect x="154" y="252" width="204" height="22" rx="11"/>
+    <rect x="154" y="306" width="154" height="22" rx="11"/>
+    <rect x="154" y="360" width="96" height="22" rx="11"/>
+  </g>
+</svg>

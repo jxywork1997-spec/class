@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#087d79" />
+    <meta name="description" content="南京医科大学 2026—2027 学年第一学期个人课程表" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="我的课程表" />
+    <meta property="og:description" content="南京医科大学 · 2026—2027 秋季" />
+    <meta property="og:image" content="__SITE_ORIGIN__/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="我的课程表" />
+    <meta name="twitter:description" content="南京医科大学 · 2026—2027 秋季" />
+    <meta name="twitter:image" content="__SITE_ORIGIN__/og.png" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="我的课表" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/styles.css" />
+    <title>我的课程表 · 南京医科大学</title>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">NJMU · 2026—2027 秋季</p>
+          <h1>我的课程表</h1>
+        </div>
+        <button class="install-button" id="installButton" type="button" aria-label="添加到手机桌面">
+          <span aria-hidden="true">＋</span> 桌面
+        </button>
+      </header>
+
+      <main>
+        <section class="next-card" aria-labelledby="nextTitle">
+          <div class="next-card__meta">
+            <span class="status-dot" aria-hidden="true"></span>
+            <span id="nextLabel">下一节课</span>
+          </div>
+          <div id="nextCourse"></div>
+        </section>
+
+        <section class="view view--active" id="weekView" data-view="week" aria-labelledby="weekHeading">
+          <div class="section-heading">
+            <div>
+              <p class="section-kicker">每周安排</p>
+              <h2 id="weekHeading">周课表</h2>
+            </div>
+            <div class="week-controls">
+              <button id="prevWeek" type="button" aria-label="上一周">‹</button>
+              <button id="weekPicker" class="week-picker" type="button" aria-haspopup="listbox">
+                <span id="weekName">第1周</span>
+                <small id="weekRange"></small>
+              </button>
+              <button id="nextWeek" type="button" aria-label="下一周">›</button>
+            </div>
+          </div>
+          <div class="week-strip" id="weekStrip" role="listbox" aria-label="选择周次"></div>
+          <div class="schedule-grid" id="scheduleGrid"></div>
+        </section>
+
+        <section class="view" id="coursesView" data-view="courses" aria-labelledby="coursesHeading">
+          <div class="section-heading">
+            <div>
+              <p class="section-kicker">8门课程 · 五台校区</p>
+              <h2 id="coursesHeading">全部课程</h2>
+            </div>
+          </div>
+          <div class="course-list" id="courseList"></div>
+        </section>
+
+        <section class="view" id="timesView" data-view="times" aria-labelledby="timesHeading">
+          <div class="section-heading">
+            <div>
+              <p class="section-kicker">南京医科大学</p>
+              <h2 id="timesHeading">节次时间</h2>
+            </div>
+          </div>
+          <div class="time-groups" id="timeGroups"></div>
+        </section>
+      </main>
+
+      <nav class="bottom-nav" aria-label="课程表导航">
+        <button class="nav-item nav-item--active" type="button" data-target="week">
+          <span class="nav-icon" aria-hidden="true">▦</span><span>周课表</span>
+        </button>
+        <button class="nav-item" type="button" data-target="courses">
+          <span class="nav-icon" aria-hidden="true">☷</span><span>全部课程</span>
+        </button>
+        <button class="nav-item" type="button" data-target="times">
+          <span class="nav-icon" aria-hidden="true">◷</span><span>节次</span>
+        </button>
+      </nav>
+    </div>
+
+    <div class="sheet-backdrop" id="installSheet" hidden>
+      <section class="sheet" role="dialog" aria-modal="true" aria-labelledby="installTitle">
+        <div class="sheet-handle" aria-hidden="true"></div>
+        <h2 id="installTitle">添加到手机桌面</h2>
+        <p id="installHelp">在浏览器菜单中选择“添加到主屏幕”或“安装应用”，以后就能像 App 一样打开。</p>
+        <button class="primary-button" id="confirmInstall" type="button">立即添加</button>
+        <button class="ghost-button" id="closeInstall" type="button">稍后</button>
+      </section>
+    </div>
+
+    <script src="/app.js" defer></script>
+  </body>
+</html>
