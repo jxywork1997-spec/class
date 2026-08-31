@@ -2,8 +2,8 @@
   "name": "南京医科大学个人课程表",
   "short_name": "我的课表",
   "description": "2026—2027 学年第一学期个人课程表",
-  "start_url": "/",
-  "scope": "/",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "orientation": "portrait-primary",
   "background_color": "#f4f7f6",
@@ -11,7 +11,7 @@
   "lang": "zh-CN",
   "icons": [
     {
-      "src": "/icon.svg",
+      "src": "./icon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any maskable"

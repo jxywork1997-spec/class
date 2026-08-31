@@ -1,5 +1,5 @@
-const CACHE_NAME = "njmu-timetable-v3";
-const APP_ASSETS = ["/", "/styles.css?v=3", "/app.js?v=3", "/manifest.webmanifest", "/icon.svg"];
+const CACHE_NAME = "njmu-timetable-v4";
+const APP_ASSETS = ["./", "./styles.css?v=3", "./app.js?v=3", "./manifest.webmanifest", "./icon.svg"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_ASSETS)));
@@ -22,6 +22,6 @@ self.addEventListener("fetch", (event) => {
         caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
         return response;
       })
-      .catch(() => caches.match(event.request).then((cached) => cached || caches.match("/")))
+      .catch(() => caches.match(event.request).then((cached) => cached || caches.match("./")))
   );
 });
