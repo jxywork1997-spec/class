@@ -24,7 +24,7 @@ html { background: var(--canvas); scroll-behavior: smooth; }
 
 body {
   margin: 0;
-  min-width: 320px;
+  min-width: 0;
   background:
     radial-gradient(circle at 90% 0%, rgba(255, 201, 86, 0.22), transparent 28rem),
     var(--canvas);
@@ -32,7 +32,7 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
-button { font: inherit; }
+button { font: inherit; touch-action: manipulation; }
 button:focus-visible { outline: 3px solid rgba(8, 125, 121, 0.28); outline-offset: 3px; }
 
 .app-shell { width: min(100%, 1120px); margin: 0 auto; padding: 0 18px 112px; }
@@ -133,6 +133,8 @@ h2 { margin-bottom: 0; font-size: 1.32rem; letter-spacing: -0.025em; }
 .week-chip--active { background: var(--teal); color: white; }
 .week-chip--warning { color: var(--danger); background: #fff0e8; }
 
+.mobile-day-tabs { display: none; }
+
 .schedule-grid { display: grid; gap: 11px; }
 .day-column { min-width: 0; }
 .day-header { display: flex; align-items: center; gap: 10px; margin: 4px 2px 9px; }
@@ -205,12 +207,76 @@ h2 { margin-bottom: 0; font-size: 1.32rem; letter-spacing: -0.025em; }
   .time-groups { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
+@media (max-width: 759px) {
+  .app-shell { padding-right: 14px; padding-left: 14px; }
+  .topbar { padding-bottom: 14px; }
+  .next-card { min-height: 0; padding: 20px; border-radius: 24px; }
+  .next-content { margin-top: 15px; }
+  .next-details { margin-top: 14px; gap: 6px 14px; }
+  .view { margin-top: 25px; }
+  .section-heading { margin-bottom: 13px; }
+
+  .mobile-day-tabs {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 6px;
+    margin-bottom: 13px;
+    padding: 5px;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background: rgba(255,255,255,.72);
+    box-shadow: 0 8px 24px rgba(24, 67, 63, .06);
+  }
+  .mobile-day-tab {
+    position: relative;
+    display: grid;
+    place-items: center;
+    align-content: center;
+    gap: 2px;
+    min-width: 0;
+    min-height: 54px;
+    padding: 5px 2px;
+    border: 0;
+    border-radius: 13px;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+  }
+  .mobile-day-tab span { font-size: .68rem; font-weight: 800; }
+  .mobile-day-tab strong { font-size: .88rem; font-variant-numeric: tabular-nums; }
+  .mobile-day-tab::after {
+    content: "";
+    position: absolute;
+    bottom: 4px;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: transparent;
+  }
+  .mobile-day-tab--has-course::after { background: var(--amber); }
+  .mobile-day-tab--active { background: var(--teal); color: white; box-shadow: 0 7px 18px rgba(8, 125, 121, .22); }
+  .mobile-day-tab--active::after { background: #ffe08d; }
+  .mobile-day-tab--today:not(.mobile-day-tab--active) { color: var(--teal-dark); background: var(--teal-soft); }
+
+  .schedule-grid .day-column { display: none; }
+  .schedule-grid .day-column--active { display: block; animation: fade-in .2s ease both; }
+  .schedule-grid .day-header { display: none; }
+  .day-empty { min-height: 150px; }
+  .course-card:last-child { margin-bottom: 0; }
+}
+
 @media (max-width: 480px) {
   .section-heading { align-items: center; }
   .week-controls { grid-template-columns: 34px minmax(92px, 1fr) 34px; }
   .week-strip { grid-template-columns: repeat(5, minmax(45px, 1fr)); }
   .next-course-row { align-items: flex-start; flex-direction: column; gap: 10px; }
   .countdown { order: -1; }
+}
+
+@media (max-width: 350px) {
+  .section-heading { align-items: stretch; flex-direction: column; }
+  .week-controls { width: 100%; }
+  .install-button { padding: 0 11px; }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -223,6 +289,7 @@ h2 { margin-bottom: 0; font-size: 1.32rem; letter-spacing: -0.025em; }
   .time-group h3 { background: #183532; }
   .time-row { border-color: #263b38; }
   .bottom-nav { border-color: #2c4541; background: rgba(20,38,36,.92); }
+  .mobile-day-tabs { border-color: var(--line); background: rgba(20,38,36,.78); }
   .sheet { background: #142624; }
   .day-empty, .empty-week { background: rgba(20,38,36,.55); }
 }

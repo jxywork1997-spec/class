@@ -1,5 +1,5 @@
-const CACHE_NAME = "njmu-timetable-v1";
-const APP_ASSETS = ["/", "/styles.css", "/app.js", "/manifest.webmanifest", "/icon.svg"];
+const CACHE_NAME = "njmu-timetable-v3";
+const APP_ASSETS = ["/", "/styles.css?v=3", "/app.js?v=3", "/manifest.webmanifest", "/icon.svg"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_ASSETS)));

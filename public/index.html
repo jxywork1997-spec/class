@@ -21,7 +21,7 @@
     <meta name="apple-mobile-web-app-title" content="我的课表" />
     <link rel="manifest" href="/manifest.webmanifest" />
     <link rel="icon" href="/icon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="/styles.css?v=3" />
     <title>我的课程表 · 南京医科大学</title>
   </head>
   <body>
@@ -61,6 +61,7 @@
             </div>
           </div>
           <div class="week-strip" id="weekStrip" role="listbox" aria-label="选择周次"></div>
+          <div class="mobile-day-tabs" id="mobileDayTabs" role="tablist" aria-label="选择当天课程"></div>
           <div class="schedule-grid" id="scheduleGrid"></div>
         </section>
 
@@ -108,6 +109,6 @@
       </section>
     </div>
 
-    <script src="/app.js" defer></script>
+    <script src="/app.js?v=3" defer></script>
   </body>
 </html>

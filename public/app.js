@@ -141,6 +141,7 @@ let selectedWeek = rawCurrentWeek >= 1 && rawCurrentWeek <= 20
   : rawCurrentWeek < 1
     ? allEvents[0].week
     : 20;
+let selectedDay = preferredDayForWeek(selectedWeek);
 
 const elements = {
   nextCourse: document.querySelector("#nextCourse"),
@@ -148,6 +149,7 @@ const elements = {
   weekName: document.querySelector("#weekName"),
   weekRange: document.querySelector("#weekRange"),
   weekStrip: document.querySelector("#weekStrip"),
+  mobileDayTabs: document.querySelector("#mobileDayTabs"),
   scheduleGrid: document.querySelector("#scheduleGrid"),
   prevWeek: document.querySelector("#prevWeek"),
   nextWeek: document.querySelector("#nextWeek"),
@@ -189,6 +191,12 @@ function rangeLabel(week) {
 
 function weeksLabel(segments) {
   return segments.map(([start, end]) => start === end ? `第${start}周` : `第${start}—${end}周`).join("、");
+}
+
+function preferredDayForWeek(week) {
+  const todayIndex = now.getDay() - 1;
+  if (week === rawCurrentWeek && todayIndex >= 0 && todayIndex < 5) return todayIndex;
+  return allEvents.find((event) => event.week === week)?.day ?? 0;
 }
 
 function countdownLabel(target) {
@@ -234,6 +242,16 @@ function renderWeekStrip() {
   }).join("");
 }
 
+function renderMobileDayTabs(monday, weekEvents) {
+  elements.mobileDayTabs.innerHTML = weekdays.map((_, dayIndex) => {
+    const date = addDays(monday, dayIndex);
+    const hasCourse = weekEvents.some((event) => event.day === dayIndex);
+    const isToday = startOfDay(date).getTime() === startOfDay(now).getTime();
+    const active = dayIndex === selectedDay;
+    return `<button class="mobile-day-tab ${active ? "mobile-day-tab--active" : ""} ${hasCourse ? "mobile-day-tab--has-course" : ""} ${isToday ? "mobile-day-tab--today" : ""}" type="button" role="tab" aria-selected="${active}" aria-controls="day-${dayIndex}" data-day="${dayIndex}"><span>${shortWeekdays[dayIndex]}</span><strong>${date.getMonth() + 1}/${date.getDate()}</strong></button>`;
+  }).join("");
+}
+
 function renderWeek() {
   elements.weekName.textContent = `第${selectedWeek}周${selectedWeek === 20 ? " · 待确认" : ""}`;
   elements.weekRange.textContent = rangeLabel(selectedWeek);
@@ -241,13 +259,14 @@ function renderWeek() {
   elements.nextWeek.disabled = selectedWeek === 20;
 
   const weekEvents = allEvents.filter((event) => event.week === selectedWeek);
+  const monday = addDays(semesterStart, (selectedWeek - 1) * 7);
+  renderMobileDayTabs(monday, weekEvents);
   if (!weekEvents.length) {
     elements.scheduleGrid.innerHTML = `<div class="empty-week"><strong>这一周没有安排课程</strong>可以点击周次，快速查看有课的周。</div>`;
     renderWeekStrip();
     return;
   }
 
-  const monday = addDays(semesterStart, (selectedWeek - 1) * 7);
   elements.scheduleGrid.innerHTML = weekdays.map((dayName, dayIndex) => {
     const date = addDays(monday, dayIndex);
     const events = weekEvents.filter((event) => event.day === dayIndex);
@@ -266,7 +285,7 @@ function renderWeek() {
         </article>`).join("")
       : `<div class="day-empty">无课</div>`;
     return `
-      <section class="day-column">
+      <section class="day-column ${dayIndex === selectedDay ? "day-column--active" : ""}" id="day-${dayIndex}" role="tabpanel" aria-label="${dayName} ${dateLabel(date)}">
         <div class="day-header">
           <strong>${dayName}</strong>
           <span class="day-date">${date.getMonth() + 1}/${date.getDate()}</span>
@@ -312,11 +331,13 @@ function switchView(target) {
 
 elements.prevWeek.addEventListener("click", () => {
   selectedWeek = Math.max(1, selectedWeek - 1);
+  selectedDay = preferredDayForWeek(selectedWeek);
   renderWeek();
 });
 
 elements.nextWeek.addEventListener("click", () => {
   selectedWeek = Math.min(20, selectedWeek + 1);
+  selectedDay = preferredDayForWeek(selectedWeek);
   renderWeek();
 });
 
@@ -328,7 +349,15 @@ elements.weekStrip.addEventListener("click", (event) => {
   const button = event.target.closest("[data-week]");
   if (!button) return;
   selectedWeek = Number(button.dataset.week);
+  selectedDay = preferredDayForWeek(selectedWeek);
   elements.weekStrip.classList.remove("week-strip--open");
+  renderWeek();
+});
+
+elements.mobileDayTabs.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-day]");
+  if (!button) return;
+  selectedDay = Number(button.dataset.day);
   renderWeek();
 });
 
